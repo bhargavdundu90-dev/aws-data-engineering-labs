@@ -6,6 +6,11 @@ Each lab is a small, runnable pipeline using AWS Glue, EMR, PySpark, Lambda, S3,
 📄 Portfolio: https://hark.site/s/f828d9d5-deef-4c3f-a8c1-70f46c61fa7f?hark_region=us
 💼 LinkedIn: https://www.linkedin.com/in/bhargavdundu
 
+## Flagship projects
+| Project | What it does | Stack |
+|---------|--------------|-------|
+| [kafka-spark-realtime-streaming](https://github.com/bhargavdundu90-dev/kafka-spark-realtime-streaming) | Real-time card/UPI transaction streaming with per-card fraud signals, landing to S3/Parquet | Kafka, Spark Structured Streaming, S3, MSK/EMR Serverless, Glue, Athena, Terraform |
+
 ## Labs
 | # | Lab | Services |
 |---|-----|----------|
