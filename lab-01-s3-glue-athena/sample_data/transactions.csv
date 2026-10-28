@@ -1,0 +1,7 @@
+txn_id,account_id,txn_ts,amount,currency,product
+T001,A100,2026-10-01 09:15:00,2500.00,inr,mutual_fund
+T002,A101,2026-10-01 10:02:00,1200.50,INR,equity
+T002,A101,2026-10-01 10:02:00,1200.50,INR,equity
+T003,A102,2026-10-02 11:30:00,-50.00,INR,equity
+T004,,2026-10-02 12:45:00,800.00,INR,bond
+T005,A104,,300.00,INR,equity
