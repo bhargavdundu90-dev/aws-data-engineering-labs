@@ -15,3 +15,4 @@ Each lab is a small, runnable pipeline using AWS Glue, EMR, PySpark, Lambda, S3,
 | # | Lab | Services |
 |---|-----|----------|
 | 01 | [CSV → partitioned Parquet with Glue + Athena](lab-01-s3-glue-athena/) | S3, Glue (PySpark), Glue Catalog, Athena |
+| 02 | [Event-driven ingestion: S3 → Lambda → curated/quarantine](lab-02-lambda-s3-events/) | S3 events, Lambda, moto tests |
