@@ -1,0 +1,13 @@
+{
+  "Records": [
+    {
+      "eventSource": "aws:s3",
+      "eventName": "ObjectCreated:Put",
+      "awsRegion": "ap-south-1",
+      "s3": {
+        "bucket": {"name": "bfsi-landing-dev"},
+        "object": {"key": "raw/transactions/txns_2026-10-29.csv", "size": 412}
+      }
+    }
+  ]
+}
