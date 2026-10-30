@@ -47,7 +47,7 @@ pytest -q
 4. Configure an on-failure destination or DLQ (SQS) for files that raise.
 5. Keep outputs under a **different prefix** than the trigger so the Lambda cannot re-trigger itself.
 
-## Interview Q&A
+## Common questions
 **1. Why must the output prefix differ from the trigger prefix?**
 If the Lambda wrote back under `raw/` with a `.csv` suffix it would trigger itself in a loop. Scoping the
 notification by prefix and suffix, and writing to `curated/` and `quarantine/`, prevents recursive invocation.
