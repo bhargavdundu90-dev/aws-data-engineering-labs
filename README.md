@@ -15,3 +15,4 @@ LinkedIn: https://www.linkedin.com/in/bhargavdundu
 |---|-----|----------|
 | 01 | [CSV → partitioned Parquet with Glue + Athena](lab-01-s3-glue-athena/) | S3, Glue (PySpark), Glue Catalog, Athena |
 | 02 | [Event-driven ingestion: S3 → Lambda → curated/quarantine](lab-02-lambda-s3-events/) | S3 events, Lambda, moto tests |
+| 03 | [Redshift COPY, DISTKEY and SORTKEY design](lab-03-redshift-copy-distkeys/) | Redshift, S3 manifests, COPY, moto tests |
