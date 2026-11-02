@@ -1,0 +1,135 @@
+{
+  "Comment": "Daily loan repayments ETL: validate landed file, Glue transform, Athena data-quality gate, notify",
+  "StartAt": "ValidateLandedFile",
+  "States": {
+    "ValidateLandedFile": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "${validate_function_arn}",
+        "Payload.$": "$"
+      },
+      "ResultSelector": { "valid.$": "$.Payload.valid", "rows.$": "$.Payload.rows", "reason.$": "$.Payload.reason" },
+      "ResultPath": "$.validation",
+      "Retry": [
+        {
+          "ErrorEquals": ["Lambda.ServiceException", "Lambda.TooManyRequestsException", "Lambda.SdkClientException"],
+          "IntervalSeconds": 2,
+          "MaxAttempts": 3,
+          "BackoffRate": 2.0
+        }
+      ],
+      "Catch": [{ "ErrorEquals": ["States.ALL"], "ResultPath": "$.error", "Next": "NotifyFailure" }],
+      "Next": "IsFileValid"
+    },
+    "IsFileValid": {
+      "Type": "Choice",
+      "Choices": [{ "Variable": "$.validation.valid", "BooleanEquals": true, "Next": "RunGlueTransform" }],
+      "Default": "QuarantineFile"
+    },
+    "QuarantineFile": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::aws-sdk:s3:copyObject",
+      "Parameters": {
+        "Bucket.$": "$.bucket",
+        "CopySource.$": "States.Format('{}/{}', $.bucket, $.key)",
+        "Key.$": "States.Format('quarantine/{}', $.key)"
+      },
+      "ResultPath": null,
+      "Catch": [{ "ErrorEquals": ["States.ALL"], "ResultPath": "$.error", "Next": "NotifyFailure" }],
+      "Next": "NotifyRejected"
+    },
+    "NotifyRejected": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::sns:publish",
+      "Parameters": {
+        "TopicArn": "${alerts_topic_arn}",
+        "Subject": "Loan repayments file rejected",
+        "Message.$": "States.Format('{} rejected: {}', $.key, $.validation.reason)"
+      },
+      "ResultPath": null,
+      "Next": "Rejected"
+    },
+    "Rejected": { "Type": "Fail", "Error": "FileRejected", "Cause": "Landed file failed validation and was quarantined" },
+    "RunGlueTransform": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::glue:startJobRun.sync",
+      "Parameters": {
+        "JobName": "${glue_job_name}",
+        "Arguments": {
+          "--source_key.$": "$.key",
+          "--business_date.$": "$.business_date"
+        }
+      },
+      "ResultSelector": { "job_run_id.$": "$.Id", "state.$": "$.JobRunState" },
+      "ResultPath": "$.glue",
+      "Retry": [
+        {
+          "ErrorEquals": ["Glue.ConcurrentRunsExceededException", "Glue.ThrottlingException"],
+          "IntervalSeconds": 30,
+          "MaxAttempts": 4,
+          "BackoffRate": 2.0
+        },
+        { "ErrorEquals": ["States.TaskFailed"], "IntervalSeconds": 60, "MaxAttempts": 1 }
+      ],
+      "Catch": [{ "ErrorEquals": ["States.ALL"], "ResultPath": "$.error", "Next": "NotifyFailure" }],
+      "Next": "RunQualityQuery"
+    },
+    "RunQualityQuery": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::athena:startQueryExecution.sync",
+      "Parameters": {
+        "QueryString.$": "States.Format('SELECT count(*) AS total, count_if(loan_id IS NULL) AS null_loan_id, count_if(amount <= 0) AS bad_amount FROM curated.loan_repayments WHERE business_date = \\'{}\\'', $.business_date)",
+        "WorkGroup": "${athena_workgroup}"
+      },
+      "ResultSelector": { "query_id.$": "$.QueryExecution.QueryExecutionId" },
+      "ResultPath": "$.dq_query",
+      "Catch": [{ "ErrorEquals": ["States.ALL"], "ResultPath": "$.error", "Next": "NotifyFailure" }],
+      "Next": "EvaluateQuality"
+    },
+    "EvaluateQuality": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "${dq_function_arn}",
+        "Payload": {
+          "query_id.$": "$.dq_query.query_id",
+          "expected_rows.$": "$.validation.rows"
+        }
+      },
+      "ResultSelector": { "passed.$": "$.Payload.passed", "failures.$": "$.Payload.failures" },
+      "ResultPath": "$.dq",
+      "Catch": [{ "ErrorEquals": ["States.ALL"], "ResultPath": "$.error", "Next": "NotifyFailure" }],
+      "Next": "QualityPassed"
+    },
+    "QualityPassed": {
+      "Type": "Choice",
+      "Choices": [{ "Variable": "$.dq.passed", "BooleanEquals": true, "Next": "NotifySuccess" }],
+      "Default": "NotifyFailure"
+    },
+    "NotifySuccess": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::sns:publish",
+      "Parameters": {
+        "TopicArn": "${alerts_topic_arn}",
+        "Subject": "Loan repayments ETL succeeded",
+        "Message.$": "States.Format('{} loaded for {}', $.key, $.business_date)"
+      },
+      "ResultPath": null,
+      "Next": "Done"
+    },
+    "Done": { "Type": "Succeed" },
+    "NotifyFailure": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::sns:publish",
+      "Parameters": {
+        "TopicArn": "${alerts_topic_arn}",
+        "Subject": "Loan repayments ETL failed",
+        "Message.$": "States.JsonToString($)"
+      },
+      "ResultPath": null,
+      "Next": "Failed"
+    },
+    "Failed": { "Type": "Fail", "Error": "EtlFailed", "Cause": "See the SNS alert for the state input and error" }
+  }
+}
