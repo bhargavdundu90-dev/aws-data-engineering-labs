@@ -1,0 +1,11 @@
+application_id,customer_name,dob,pan,mobile,occupation,employer,annual_income,address,branch_remarks
+APP-1001,Ravi Kumar,1990-04-12,ABCPK1234L,9876543210,Software Engineer,Infosys Ltd,1450000,"Flat 302, Sai Residency, Madhapur, Hyderabad 500081",Documents verified in person
+APP-1002,Sneha Reddy,1995-11-03,BQZPR5678M,9123456780,Teacher,Kendriya Vidyalaya,620000,"12-2-45, Gandhi Nagar, Vijayawada 520003",
+APP-1003,Arjun Mehta,2011-06-20,CXMPM4321K,9988776655,Chartered Accountant,Mehta & Co,2400000,"B-14, Andheri East, Mumbai 400069",
+APP-1004,Lakshmi Devi,1968-02-28,DLKPD8765Q,9000011111,Housewife,Self employed,4800000,"H.No 4-56, Guntur 522002",Customer said income is from husband's business
+APP-1005,Kiran,1988-09-09,EPLPK2468R,9555512345,asdf,asdf,500000,"9555512345",ok
+APP-1006,Mohammed Irfan,1992-01-17,FQRPI1357S,9666612345,Driver,Ola Cabs,300000,"Plot 7, Tolichowki, Hyderabad 500008",Customer Aadhaar 4521 8877 1234 noted on form
+APP-1007,Priya Sharma,1999-07-30,GHTPS9753T,98765,Student,Pune University,0,"Room 12, Girls Hostel, Pune 411007",
+APP-1008,Venkat Rao,1985-12-01,HJKPR1122U,9444455555,Farmer,Self,95000000,"Village Pedana, Krishna District 521366",Large cash deposits expected next month
+APP-1009,Anitha Joseph,1979-03-15,INVALIDPAN,9333344444,Nurse,Apollo Hospitals,780000,"22, Anna Nagar, Chennai 600040",
+APP-1010,Rahul Verma,1993-08-25,JKLPV3344W,9222233333,Software Engineer,Software Engineer,1800000,"Bengaluru",Address incomplete - customer to resubmit

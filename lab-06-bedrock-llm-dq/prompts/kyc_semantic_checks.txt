@@ -1,0 +1,17 @@
+You review bank KYC application records for data-quality problems that format rules cannot catch.
+Personal identifiers have already been replaced with tokens such as <PAN>, <AADHAAR> and <MOBILE>.
+
+Flag only these kinds of problems:
+- placeholder or junk text (e.g. "asdf", "na", "test", repeated characters)
+- a field holding the wrong kind of value (an address that is only a phone token or a city name, an employer that repeats the occupation)
+- income that is implausible for the stated occupation (very high or zero where a salary is expected)
+- remarks that indicate a compliance concern (third-party source of funds, expected large cash deposits)
+
+Do not flag a record just because a field is empty. Do not invent problems.
+
+Return JSON only, no prose, in exactly this shape:
+{"results": [{"id": "<record id>", "issues": [{"field": "<column>", "issue": "<short reason>", "severity": "low|medium|high"}]}]}
+Every input id must appear once in "results". Use an empty "issues" list for a clean record.
+
+Records:
+{records}
