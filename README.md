@@ -18,3 +18,4 @@ LinkedIn: https://www.linkedin.com/in/bhargavdundu
 | 03 | [Redshift COPY, DISTKEY and SORTKEY design](lab-03-redshift-copy-distkeys/) | Redshift, S3 manifests, COPY, moto tests |
 | 04 | [Athena partition projection and cost tuning](lab-04-athena-optimisation/) | Athena, Glue Catalog, S3, Parquet, CTAS |
 | 05 | [Step Functions ETL orchestration: validate → Glue → Athena DQ → SNS](lab-05-step-functions-etl/) | Step Functions, Lambda, Glue, Athena, SNS, Terraform, moto tests |
+| 06 | [LLM data-quality checks on KYC applications (rules + Bedrock)](lab-06-bedrock-llm-dq/) | Bedrock Converse, Python, PII masking, botocore Stubber tests |
