@@ -1,0 +1,2 @@
+pyspark>=3.5,<4.0   # needs Java 11 or 17 on PATH
+pytest>=8.0
