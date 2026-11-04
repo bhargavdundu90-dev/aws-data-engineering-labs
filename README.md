@@ -19,3 +19,4 @@ LinkedIn: https://www.linkedin.com/in/bhargavdundu
 | 04 | [Athena partition projection and cost tuning](lab-04-athena-optimisation/) | Athena, Glue Catalog, S3, Parquet, CTAS |
 | 05 | [Step Functions ETL orchestration: validate → Glue → Athena DQ → SNS](lab-05-step-functions-etl/) | Step Functions, Lambda, Glue, Athena, SNS, Terraform, moto tests |
 | 06 | [LLM data-quality checks on KYC applications (rules + Bedrock)](lab-06-bedrock-llm-dq/) | Bedrock Converse, Python, PII masking, botocore Stubber tests |
+| 07 | [SCD Type 2 from daily full snapshots (loan accounts)](lab-07-pyspark-scd2/) | PySpark, Iceberg MERGE, Glue, Athena, local Spark tests |
