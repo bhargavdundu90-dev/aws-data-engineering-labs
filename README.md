@@ -20,3 +20,4 @@ LinkedIn: https://www.linkedin.com/in/bhargavdundu
 | 05 | [Step Functions ETL orchestration: validate → Glue → Athena DQ → SNS](lab-05-step-functions-etl/) | Step Functions, Lambda, Glue, Athena, SNS, Terraform, moto tests |
 | 06 | [LLM data-quality checks on KYC applications (rules + Bedrock)](lab-06-bedrock-llm-dq/) | Bedrock Converse, Python, PII masking, botocore Stubber tests |
 | 07 | [SCD Type 2 from daily full snapshots (loan accounts)](lab-07-pyspark-scd2/) | PySpark, Iceberg MERGE, Glue, Athena, local Spark tests |
+| 08 | [Kinesis Data Streams → Lambda → S3 for UPI/card transactions](lab-08-kinesis-streaming/) | Kinesis, Lambda (partial batch response), S3, SQS DLQ, Terraform, moto tests |
