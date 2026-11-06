@@ -21,3 +21,4 @@ LinkedIn: https://www.linkedin.com/in/bhargavdundu
 | 06 | [LLM data-quality checks on KYC applications (rules + Bedrock)](lab-06-bedrock-llm-dq/) | Bedrock Converse, Python, PII masking, botocore Stubber tests |
 | 07 | [SCD Type 2 from daily full snapshots (loan accounts)](lab-07-pyspark-scd2/) | PySpark, Iceberg MERGE, Glue, Athena, local Spark tests |
 | 08 | [Kinesis Data Streams → Lambda → S3 for UPI/card transactions](lab-08-kinesis-streaming/) | Kinesis, Lambda (partial batch response), S3, SQS DLQ, Terraform, moto tests |
+| 09 | [Data-quality framework for card transactions: YAML checks, quarantine, anomaly checks, DQDL export](lab-09-data-quality-framework/) | PySpark, Glue Data Quality (DQDL), Deequ / Great Expectations mapping, local Spark tests |
