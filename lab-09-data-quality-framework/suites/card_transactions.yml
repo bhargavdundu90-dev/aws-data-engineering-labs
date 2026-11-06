@@ -1,0 +1,76 @@
+# Checks on the daily card-transaction file from the card processor, before it reaches curated/.
+# error = blocks or quarantines, warn = reported only.
+# Row checks quarantine every failing row; the batch FAILS only when compliance drops below min_compliance.
+dataset: card_transactions
+key: txn_id
+checks:
+  - name: has_rows
+    type: size
+    min_rows: 1
+
+  - name: txn_id_present
+    type: completeness
+    column: txn_id
+
+  - name: txn_id_unique
+    type: unique
+    column: txn_id
+    order_by: txn_ts            # keep the first copy of a replayed record, quarantine the rest
+    min_compliance: 0.99
+
+  - name: account_id_present
+    type: completeness
+    column: account_id
+    min_compliance: 0.99
+
+  - name: merchant_id_present
+    type: expression            # ATM withdrawals legitimately have no merchant
+    expr: "channel = 'ATM' OR merchant_id IS NOT NULL"
+    level: warn
+    min_compliance: 0.99
+
+  - name: amount_in_range
+    type: range
+    column: amount
+    min: 0.01
+    max: 500000
+    min_compliance: 0.99
+
+  - name: currency_known
+    type: allowed_values
+    column: currency
+    values: [INR, USD, EUR, GBP, AED, SGD]
+    min_compliance: 0.99
+
+  - name: card_bin_format
+    type: pattern
+    column: card_bin
+    regex: "^[0-9]{6}$"
+
+  - name: mcc_format
+    type: pattern
+    column: mcc
+    regex: "^[0-9]{4}$"
+    level: warn
+
+  - name: channel_known
+    type: allowed_values
+    column: channel
+    values: [POS, ECOM, ATM, CONTACTLESS]
+
+  - name: settles_after_txn
+    type: expression
+    expr: "settlement_date >= to_date(txn_ts)"
+    min_compliance: 0.99
+
+  - name: volume_vs_yesterday
+    type: row_count_change
+    max_pct: 0.5
+
+  - name: avg_ticket_size
+    type: metric_zscore
+    column: amount
+    max_z: 3
+    window: 7
+    min_history: 3
+    level: warn
