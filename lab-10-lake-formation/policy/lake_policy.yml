@@ -1,0 +1,63 @@
+# Lake Formation access policy for the lending data lake.
+# Tags are attached to the database, tables and (where needed) single columns.
+# A column inherits its table's tags, a table inherits the database's tags,
+# and a tag set on a column overrides the inherited value for the same key.
+
+account_id: "111122223333"
+
+lf_tags:
+  domain: [lending, cards]
+  sensitivity: [public, internal, pii]
+
+databases:
+  lending_curated:
+    tags: {domain: lending, sensitivity: internal}
+    tables:
+      customers:
+        columns: [customer_id, full_name, pan_number, mobile, city, branch_code, region, risk_tier, kyc_status]
+        column_tags:
+          full_name: {sensitivity: pii}
+          pan_number: {sensitivity: pii}
+          mobile: {sensitivity: pii}
+          city: {sensitivity: public}
+          region: {sensitivity: public}
+      loan_accounts:
+        columns: [loan_id, customer_id, branch_code, region, product, principal, outstanding, dpd, disbursed_on]
+        column_tags:
+          product: {sensitivity: public}
+          region: {sensitivity: public}
+
+principals:
+  data_engineer: arn:aws:iam::111122223333:role/lending-data-engineer
+  risk_analyst: arn:aws:iam::111122223333:role/risk-analyst
+  compliance_auditor: arn:aws:iam::111122223333:role/compliance-auditor
+  branch_ops_south: arn:aws:iam::111122223333:role/branch-ops-south
+
+admins: [data_engineer]
+
+# Tag-based grants: the principal gets the permissions on every table/column whose
+# tags match the expression. Values in one key are OR, keys are AND.
+tag_grants:
+  - principal: data_engineer
+    expression: {domain: [lending], sensitivity: [public, internal, pii]}
+    permissions: [SELECT, DESCRIBE, ALTER, INSERT]
+  - principal: risk_analyst
+    expression: {domain: [lending], sensitivity: [public, internal]}
+    permissions: [SELECT, DESCRIBE]
+  - principal: compliance_auditor
+    expression: {domain: [lending], sensitivity: [public, internal, pii]}
+    permissions: [SELECT, DESCRIBE]
+
+# Data cell filters: row filter + column restriction on one table.
+data_filters:
+  - name: customers_south_no_pii
+    database: lending_curated
+    table: customers
+    row_filter: "region = 'SOUTH'"
+    excluded_columns: [full_name, pan_number, mobile]
+    grant_to: [branch_ops_south]
+  - name: loans_south
+    database: lending_curated
+    table: loan_accounts
+    row_filter: "region = 'SOUTH' AND dpd >= 0"
+    grant_to: [branch_ops_south]

@@ -1,0 +1,38 @@
+{
+  "PrincipalResourcePermissions": [
+    {
+      "Principal": {"DataLakePrincipalIdentifier": "IAM_ALLOWED_PRINCIPALS"},
+      "Resource": {"Database": {"CatalogId": "111122223333", "Name": "lending_curated"}},
+      "Permissions": ["ALL"], "PermissionsWithGrantOption": []
+    },
+    {
+      "Principal": {"DataLakePrincipalIdentifier": "arn:aws:iam::111122223333:role/lending-data-engineer"},
+      "Resource": {"LFTagPolicy": {"CatalogId": "111122223333", "ResourceType": "TABLE",
+        "Expression": [{"TagKey": "domain", "TagValues": ["lending"]}]}},
+      "Permissions": ["SELECT", "DESCRIBE", "ALTER", "INSERT"], "PermissionsWithGrantOption": []
+    },
+    {
+      "Principal": {"DataLakePrincipalIdentifier": "arn:aws:iam::111122223333:role/risk-analyst"},
+      "Resource": {"Table": {"CatalogId": "111122223333", "DatabaseName": "lending_curated", "Name": "customers"}},
+      "Permissions": ["SELECT"], "PermissionsWithGrantOption": []
+    },
+    {
+      "Principal": {"DataLakePrincipalIdentifier": "arn:aws:iam::111122223333:role/risk-analyst"},
+      "Resource": {"TableWithColumns": {"CatalogId": "111122223333", "DatabaseName": "lending_curated",
+        "Name": "loan_accounts", "ColumnNames": ["loan_id", "product", "outstanding", "dpd"]}},
+      "Permissions": ["SELECT"], "PermissionsWithGrantOption": ["SELECT"]
+    },
+    {
+      "Principal": {"DataLakePrincipalIdentifier": "arn:aws:iam::111122223333:user/temp.contractor"},
+      "Resource": {"TableWithColumns": {"CatalogId": "111122223333", "DatabaseName": "lending_curated",
+        "Name": "customers", "ColumnWildcard": {"ExcludedColumnNames": ["pan_number"]}}},
+      "Permissions": ["SELECT", "DROP"], "PermissionsWithGrantOption": []
+    },
+    {
+      "Principal": {"DataLakePrincipalIdentifier": "arn:aws:iam::111122223333:role/branch-ops-south"},
+      "Resource": {"DataCellsFilter": {"TableCatalogId": "111122223333", "DatabaseName": "lending_curated",
+        "TableName": "customers", "Name": "customers_south_no_pii"}},
+      "Permissions": ["SELECT"], "PermissionsWithGrantOption": []
+    }
+  ]
+}
