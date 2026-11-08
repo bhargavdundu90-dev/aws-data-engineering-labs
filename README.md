@@ -9,6 +9,7 @@ LinkedIn: https://www.linkedin.com/in/bhargavdundu
 | Project | What it does | Stack |
 |---------|--------------|-------|
 | [kafka-spark-realtime-streaming](https://github.com/bhargavdundu90-dev/kafka-spark-realtime-streaming) | Real-time card/UPI transaction streaming with per-card fraud signals, landing to S3/Parquet | Kafka, Spark Structured Streaming, S3, MSK/EMR Serverless, Glue, Athena, Terraform |
+| [cdc-debezium-kafka-pipeline](https://github.com/bhargavdundu90-dev/cdc-debezium-kafka-pipeline) | Postgres CDC with Debezium into an SCD Type 2 customer dimension: LSN dedupe, late events, deletes, incremental merge, DQ-gated versioned promote | Debezium, Kafka, PySpark, S3, Glue Catalog, Athena, MSK, Terraform, GitHub Actions |
 
 ## Labs
 | # | Lab | Services |
