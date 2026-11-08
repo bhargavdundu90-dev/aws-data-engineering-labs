@@ -1,0 +1,338 @@
+{
+  "format_version": "1.2",
+  "terraform_version": "1.9.8",
+  "resource_changes": [
+    {
+      "address": "aws_kms_key.lake",
+      "mode": "managed",
+      "type": "aws_kms_key",
+      "name": "lake",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "delete",
+          "create"
+        ],
+        "before": {
+          "enable_key_rotation": false
+        },
+        "after": {
+          "enable_key_rotation": true,
+          "tags_all": {
+            "owner": "data-platform",
+            "cost_center": "CC-1042",
+            "data_classification": "restricted",
+            "environment": "prod",
+            "domain": "lending",
+            "managed_by": "terraform"
+          }
+        },
+        "after_unknown": {}
+      }
+    },
+    {
+      "address": "module.raw.aws_s3_bucket.this",
+      "mode": "managed",
+      "type": "aws_s3_bucket",
+      "name": "this",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "bucket": "acme-lending-prod-raw",
+          "force_destroy": true,
+          "tags": {
+            "zone": "raw"
+          },
+          "tags_all": {
+            "owner": "data-platform",
+            "cost_center": "CC-1042",
+            "data_classification": "restricted",
+            "environment": "prod",
+            "domain": "lending",
+            "managed_by": "terraform",
+            "zone": "raw"
+          }
+        },
+        "after_unknown": {}
+      },
+      "module_address": "module.raw"
+    },
+    {
+      "address": "module.raw.aws_s3_bucket_public_access_block.this",
+      "mode": "managed",
+      "type": "aws_s3_bucket_public_access_block",
+      "name": "this",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "block_public_acls": true,
+          "block_public_policy": true,
+          "ignore_public_acls": true,
+          "restrict_public_buckets": true
+        },
+        "after_unknown": {}
+      },
+      "module_address": "module.raw"
+    },
+    {
+      "address": "module.raw.aws_s3_bucket_server_side_encryption_configuration.this",
+      "mode": "managed",
+      "type": "aws_s3_bucket_server_side_encryption_configuration",
+      "name": "this",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "rule": [
+            {
+              "apply_server_side_encryption_by_default": [
+                {
+                  "sse_algorithm": "aws:kms"
+                }
+              ],
+              "bucket_key_enabled": true
+            }
+          ]
+        },
+        "after_unknown": {}
+      },
+      "module_address": "module.raw"
+    },
+    {
+      "address": "module.raw.aws_s3_bucket_versioning.this",
+      "mode": "managed",
+      "type": "aws_s3_bucket_versioning",
+      "name": "this",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "versioning_configuration": [
+            {
+              "status": "Enabled"
+            }
+          ]
+        },
+        "after_unknown": {}
+      },
+      "module_address": "module.raw"
+    },
+    {
+      "address": "module.curated.aws_s3_bucket.this",
+      "mode": "managed",
+      "type": "aws_s3_bucket",
+      "name": "this",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "bucket": "acme-lending-prod-curated",
+          "force_destroy": false,
+          "tags": {
+            "zone": "curated"
+          },
+          "tags_all": {
+            "owner": "data-platform",
+            "data_classification": "restricted",
+            "environment": "prod",
+            "domain": "lending",
+            "managed_by": "terraform",
+            "zone": "curated"
+          }
+        },
+        "after_unknown": {}
+      },
+      "module_address": "module.curated"
+    },
+    {
+      "address": "module.curated.aws_s3_bucket_server_side_encryption_configuration.this",
+      "mode": "managed",
+      "type": "aws_s3_bucket_server_side_encryption_configuration",
+      "name": "this",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "rule": [
+            {
+              "apply_server_side_encryption_by_default": [
+                {
+                  "sse_algorithm": "AES256"
+                }
+              ],
+              "bucket_key_enabled": true
+            }
+          ]
+        },
+        "after_unknown": {}
+      },
+      "module_address": "module.curated"
+    },
+    {
+      "address": "module.curated.aws_s3_bucket_versioning.this",
+      "mode": "managed",
+      "type": "aws_s3_bucket_versioning",
+      "name": "this",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "versioning_configuration": [
+            {
+              "status": "Enabled"
+            }
+          ]
+        },
+        "after_unknown": {}
+      },
+      "module_address": "module.curated"
+    },
+    {
+      "address": "aws_s3_bucket.adhoc_exports",
+      "mode": "managed",
+      "type": "aws_s3_bucket",
+      "name": "adhoc_exports",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "bucket": "acme-lending-prod-exports",
+          "force_destroy": false,
+          "tags_all": {
+            "owner": "data-platform",
+            "cost_center": "CC-1042",
+            "data_classification": "restricted",
+            "environment": "prod",
+            "domain": "lending",
+            "managed_by": "terraform"
+          }
+        },
+        "after_unknown": {}
+      }
+    },
+    {
+      "address": "module.curate_job.aws_iam_role_policy.job",
+      "mode": "managed",
+      "type": "aws_iam_role_policy",
+      "name": "job",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "policy": "{\"Version\": \"2012-10-17\", \"Statement\": [{\"Sid\": \"Everything\", \"Effect\": \"Allow\", \"Action\": \"s3:*\", \"Resource\": \"*\"}]}"
+        },
+        "after_unknown": {}
+      },
+      "module_address": "module.curate_job"
+    },
+    {
+      "address": "module.curate_job.aws_glue_job.this",
+      "mode": "managed",
+      "type": "aws_glue_job",
+      "name": "this",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "update"
+        ],
+        "before": {
+          "number_of_workers": 10
+        },
+        "after": {
+          "name": "acme-lending-prod-curate",
+          "glue_version": "3.0",
+          "number_of_workers": 40,
+          "worker_type": "G.2X",
+          "timeout": 2880,
+          "tags_all": {
+            "owner": "data-platform",
+            "cost_center": "CC-1042",
+            "data_classification": "restricted",
+            "environment": "prod",
+            "domain": "lending",
+            "managed_by": "terraform"
+          }
+        },
+        "after_unknown": {}
+      },
+      "module_address": "module.curate_job"
+    },
+    {
+      "address": "module.raw_db.aws_glue_catalog_database.this",
+      "mode": "managed",
+      "type": "aws_glue_catalog_database",
+      "name": "this",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "delete"
+        ],
+        "before": {
+          "name": "lending_raw_prod"
+        },
+        "after": {},
+        "after_unknown": {}
+      },
+      "module_address": "module.raw_db"
+    },
+    {
+      "address": "aws_athena_workgroup.analysts",
+      "mode": "managed",
+      "type": "aws_athena_workgroup",
+      "name": "analysts",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "name": "acme-lending-prod-analysts",
+          "configuration": [
+            {
+              "enforce_workgroup_configuration": false
+            }
+          ],
+          "tags_all": {
+            "owner": "data-platform",
+            "cost_center": "CC-1042",
+            "data_classification": "restricted",
+            "environment": "prod",
+            "domain": "lending",
+            "managed_by": "terraform"
+          }
+        },
+        "after_unknown": {}
+      }
+    }
+  ]
+}
