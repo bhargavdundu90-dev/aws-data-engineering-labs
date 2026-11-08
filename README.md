@@ -23,3 +23,4 @@ LinkedIn: https://www.linkedin.com/in/bhargavdundu
 | 08 | [Kinesis Data Streams → Lambda → S3 for UPI/card transactions](lab-08-kinesis-streaming/) | Kinesis, Lambda (partial batch response), S3, SQS DLQ, Terraform, moto tests |
 | 09 | [Data-quality framework for card transactions: YAML checks, quarantine, anomaly checks, DQDL export](lab-09-data-quality-framework/) | PySpark, Glue Data Quality (DQDL), Deequ / Great Expectations mapping, local Spark tests |
 | 10 | [Lake Formation governance: LF-tags, PII columns, row filters and grant audit](lab-10-lake-formation/) | Lake Formation (LF-TBAC, data cell filters), Glue Catalog, Athena, Terraform, botocore Stubber tests |
+| 11 | [Terraform modules for a data stack, with plan checks before apply](lab-11-terraform-data-stack/) | Terraform (modules, dev/prod tfvars, S3 backend), S3, KMS, Glue, Athena, IAM, Python plan checks |
