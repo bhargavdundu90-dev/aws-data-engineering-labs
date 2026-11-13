@@ -25,3 +25,4 @@ LinkedIn: https://www.linkedin.com/in/bhargavdundu
 | 09 | [Data-quality framework for card transactions: YAML checks, quarantine, anomaly checks, DQDL export](lab-09-data-quality-framework/) | PySpark, Glue Data Quality (DQDL), Deequ / Great Expectations mapping, local Spark tests |
 | 10 | [Lake Formation governance: LF-tags, PII columns, row filters and grant audit](lab-10-lake-formation/) | Lake Formation (LF-TBAC, data cell filters), Glue Catalog, Athena, Terraform, botocore Stubber tests |
 | 11 | [Terraform modules for a data stack, with plan checks before apply](lab-11-terraform-data-stack/) | Terraform (modules, dev/prod tfvars, S3 backend), S3, KMS, Glue, Athena, IAM, Python plan checks |
+| 12 | [Athena cost per query, by workgroup](lab-12-athena-query-cost/) | Athena, workgroups, Python, pytest |
