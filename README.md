@@ -27,3 +27,4 @@ LinkedIn: https://www.linkedin.com/in/bhargavdundu
 | 11 | [Terraform modules for a data stack, with plan checks before apply](lab-11-terraform-data-stack/) | Terraform (modules, dev/prod tfvars, S3 backend), S3, KMS, Glue, Athena, IAM, Python plan checks |
 | 12 | [Athena cost per query, by workgroup](lab-12-athena-query-cost/) | Athena, workgroups, Python, pytest |
 | 13 | [Lambda-triggered EMR Serverless jobs from S3 events](lab-13-lambda-emr-serverless/) | S3 events, Lambda, EMR Serverless, pytest |
+| 14 | [Glue job bookmarks for incremental loads](lab-14-glue-job-bookmarks/) | Glue, job bookmarks, S3, pytest |
