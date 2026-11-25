@@ -29,3 +29,4 @@ LinkedIn: https://www.linkedin.com/in/bhargavdundu
 | 13 | [Lambda-triggered EMR Serverless jobs from S3 events](lab-13-lambda-emr-serverless/) | S3 events, Lambda, EMR Serverless, pytest |
 | 14 | [Glue job bookmarks for incremental loads](lab-14-glue-job-bookmarks/) | Glue, job bookmarks, S3, pytest |
 | 15 | [Glue Data Quality (DQDL) rules](lab-15-glue-data-quality-dqdl/) | Glue Data Quality, DQDL, Python, pytest |
+| 16 | [Spark join strategy and skew](lab-16-join-strategy/) | PySpark, broadcast joins, salting, pytest |
