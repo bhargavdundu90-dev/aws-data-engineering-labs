@@ -30,3 +30,4 @@ LinkedIn: https://www.linkedin.com/in/bhargavdundu
 | 14 | [Glue job bookmarks for incremental loads](lab-14-glue-job-bookmarks/) | Glue, job bookmarks, S3, pytest |
 | 15 | [Glue Data Quality (DQDL) rules](lab-15-glue-data-quality-dqdl/) | Glue Data Quality, DQDL, Python, pytest |
 | 16 | [Spark join strategy and skew](lab-16-join-strategy/) | PySpark, broadcast joins, salting, pytest |
+| 17 | [Athena Access Denied troubleshooting](lab-17-access-troubleshooting/) | Lake Formation, IAM, S3, KMS, pytest |
